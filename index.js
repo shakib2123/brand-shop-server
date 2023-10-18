@@ -59,6 +59,18 @@ async function run() {
       const result = await productCollection.findOne(query);
       res.send(result);
     });
+    app.get("/products/apple", async (req, res) => {
+      const brand = "Apple";
+      const query = { brand: brand };
+      const result = await productCollection.find(query).toArray();
+      res.send(result);
+    });
+    app.get("/products/apple/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await productCollection.findOne(query);
+      res.send(result);
+    });
 
     app.post("/products", async (req, res) => {
       const product = req.body;
