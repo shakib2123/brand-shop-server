@@ -29,7 +29,70 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     const brandCollection = client.db("brandShopDB").collection("brands");
+    const samsungAdCollection = client
+      .db("brandShopDB")
+      .collection("samsungAd");
+    const appleAdCollection = client.db("brandShopDB").collection("appleAd");
+    const sonyAdCollection = client.db("brandShopDB").collection("sonyAd");
+    const googleAdCollection = client.db("brandShopDB").collection("googleAd");
+    const intelAdCollection = client.db("brandShopDB").collection("intelAd");
+    const asusAdCollection = client.db("brandShopDB").collection("asusAd");
     const productCollection = client.db("brandShopDB").collection("products");
+
+    app.get("/samsungad", async (req, res) => {
+      const result = await samsungAdCollection.find().toArray();
+      res.send(result);
+    });
+    app.post("/samsungad", async (req, res) => {
+      const slide = req.body;
+      const result = await samsungAdCollection.insertOne(slide);
+      res.send(result);
+    });
+    app.get("/applead", async (req, res) => {
+      const result = await appleAdCollection.find().toArray();
+      res.send(result);
+    });
+    app.post("/applead", async (req, res) => {
+      const slide = req.body;
+      const result = await appleAdCollection.insertOne(slide);
+      res.send(result);
+    });
+    app.get("/sonyad", async (req, res) => {
+      const result = await sonyAdCollection.find().toArray();
+      res.send(result);
+    });
+    app.post("/sonyad", async (req, res) => {
+      const slide = req.body;
+      const result = await sonyAdCollection.insertOne(slide);
+      res.send(result);
+    });
+    app.get("/intelad", async (req, res) => {
+      const result = await intelAdCollection.find().toArray();
+      res.send(result);
+    });
+    app.post("/intelad", async (req, res) => {
+      const slide = req.body;
+      const result = await intelAdCollection.insertOne(slide);
+      res.send(result);
+    });
+    app.get("/googlead", async (req, res) => {
+      const result = await googleAdCollection.find().toArray();
+      res.send(result);
+    });
+    app.post("/googlead", async (req, res) => {
+      const slide = req.body;
+      const result = await googleAdCollection.insertOne(slide);
+      res.send(result);
+    });
+    app.get("/asusad", async (req, res) => {
+      const result = await asusAdCollection.find().toArray();
+      res.send(result);
+    });
+    app.post("/asusad", async (req, res) => {
+      const slide = req.body;
+      const result = await asusAdCollection.insertOne(slide);
+      res.send(result);
+    });
 
     app.get("/brands", async (req, res) => {
       const query = brandCollection.find();
@@ -90,6 +153,30 @@ async function run() {
       res.send(result);
     });
     app.get("/products/google/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await productCollection.findOne(query);
+      res.send(result);
+    });
+    app.get("/products/intel", async (req, res) => {
+      const brand = "Intel";
+      const query = { brand: brand };
+      const result = await productCollection.find(query).toArray();
+      res.send(result);
+    });
+    app.get("/products/intel/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await productCollection.findOne(query);
+      res.send(result);
+    });
+    app.get("/products/asus", async (req, res) => {
+      const brand = "Asus";
+      const query = { brand: brand };
+      const result = await productCollection.find(query).toArray();
+      res.send(result);
+    });
+    app.get("/products/asus/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await productCollection.findOne(query);
